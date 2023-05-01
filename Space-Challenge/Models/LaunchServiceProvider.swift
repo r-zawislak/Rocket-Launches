@@ -12,6 +12,12 @@ struct LaunchServiceProvider: Codable {
     let url: URL
     let name: String
     let type: Type
+    
+    // Only in details
+    let countryCode: String?
+    let description: String?
+    let logoUrl: URL?
+    let infoUrl: URL?
 }
 
 extension LaunchServiceProvider {

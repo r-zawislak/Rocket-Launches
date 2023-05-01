@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ImageWithPlaceholder: View {
     let url: URL
@@ -19,23 +20,19 @@ struct ImageWithPlaceholder: View {
     }
 
     var body: some View {
-        AsyncImage(
-            url: url,
-            content: { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: width, height: height, alignment: .center)
-                    .clipped()
-            },
-            placeholder: { placeholder }
-        )
+        KFImage(url)
+            .resizable()
+            .placeholder { progress in
+                placeholder
+            }
+            .aspectRatio(contentMode: .fill)
+            .frame(width: width, height: height, alignment: .center)
+            .clipped()
     }
     
     private var placeholder: some View {
         Rectangle()
             .fill(Color.tertiaryBackground.opacity(0.4))
-            .redacted(reason: .placeholder)
             .frame(width: width, height: height)
     }
 }

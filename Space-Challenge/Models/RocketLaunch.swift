@@ -19,3 +19,9 @@ struct RocketLaunch: Codable, Identifiable {
     let webcastLive: Bool
     let image: URL?
 }
+
+extension RocketLaunch: Equatable {
+    static func == (lhs: RocketLaunch, rhs: RocketLaunch) -> Bool {
+        lhs.id == rhs.id
+    }
+}

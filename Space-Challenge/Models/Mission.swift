@@ -10,9 +10,10 @@ import Foundation
 struct Mission: Codable {
     let id: Int
     let name: String
-    let description: String?
     let type: String
     let orbit: Orbit
+    
+    let description: String?
 }
 
 extension Mission {

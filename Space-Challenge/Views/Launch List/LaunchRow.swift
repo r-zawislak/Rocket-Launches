@@ -14,16 +14,22 @@ struct LaunchRow: View {
     @State private var infoViewHeight = 0.0
     
     private let tileCornerRadius = 16.0
+    private let animation: Namespace.ID
     
-    init(launch: RocketLaunch) {
+    init(launch: RocketLaunch, animation: Namespace.ID) {
         _viewModel = StateObject(wrappedValue: LaunchRowViewModel(launch: launch))
+        self.animation = animation
     }
     
     var body: some View {
         GeometryReader { geo in
             HStack {
                 if let image = viewModel.launch.image {
-                    ImageWithPlaceholder(url: image, width: geo.size.width / 3, height: infoViewHeight)
+                    ImageWithPlaceholder(
+                        url: image,
+                        width: geo.size.width / 3,
+                        height: infoViewHeight
+                    )
                 }
                 infoView
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -46,6 +52,7 @@ struct LaunchRow: View {
                     .stroke(Color.tertiaryBackground, lineWidth: 1)
             )
         }
+        .matchedGeometryEffect(id: viewModel.launch.id, in: animation)
         .frame(height: infoViewHeight)
     }
 
@@ -53,33 +60,20 @@ struct LaunchRow: View {
     private var infoView: some View {
         VStack(spacing: 16) {
             Text(viewModel.timeUntilLaunch)
-                    .minimumScaleFactor(0.3)
-                    .frame(maxWidth: .infinity, alignment: .center)
+                .lineLimit(1)
+                .padding(.horizontal, 4)
+                .minimumScaleFactor(0.4)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .fixedSize(horizontal: false, vertical: true)
+                    
+            
             infoRow(title: "Mission", value: viewModel.launch.mission.name)
             infoRow(title: "Rocket", value: viewModel.launch.rocket.configuration.fullName)
             infoRow(title: "Service Provider", value: viewModel.launch.launchServiceProvider.name)
             infoRow(title: "Launch", value: viewModel.launchTime)
-            
-            playButton
         }
         .padding(.vertical, 16)
         .padding(.horizontal, 4)
-    }
-    
-    private var playButton: some View {
-        HStack {
-            Image(systemName: "play.circle")
-            Text("Watch")
-                .font(.headline)
-        }
-        .foregroundColor(.red)
-        .padding(4)
-        .overlay(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(Color.red, lineWidth: 1)
-        )
-        .background(Color.tertiaryBackground)
-        .onTapGesture(perform: openVideo)
     }
     
     private func infoRow(title: String, value: String) -> some View {
@@ -91,21 +85,18 @@ struct LaunchRow: View {
             Text(value)
                 .padding(.leading, 16)
                 .font(.caption2)
-                .lineLimit(0)
+                .lineLimit(nil)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-    }
-    
-    // MARK: - Actions
-    
-    private func openVideo() {
-        
     }
 }
 
 struct LaunchRow_Previews: PreviewProvider {
+    
+    @Namespace private static var animation
+    
     static var previews: some View {
-        LaunchRow(launch: .mock)
+        LaunchRow(launch: .mock, animation: animation)
             .padding()
             .frame(height: 250)
             .preferredColorScheme(.dark)
