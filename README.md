@@ -1,10 +1,40 @@
-# The Problem
+# 🚀 Space-Challenge
+
+## 📚 Table of Contents
+
+* [Description](#-description)
+* [Technologies](#-technologies)
+* [Frameworks](#-frameworks)
+* [Features](#-features)
+* [Challenge](#-challenge)
+
+## 🎯 Description
+
+Created specifically for a [Challenge](#-challenge), this app comes with a host of additional features.
+
+## 💻 Technologies
+
+**Architecture**: Model–View–ViewModel (MVVM)
+
+**Frameworks**: 
+ - 🎨 **SwiftUI** and **Combine**
+ - 🌐 **[Moya](https://github.com/Moya/Moya)**: Networking
+ - 🖼️ **[Kingfisher](https://github.com/onevcat/Kingfisher)**: Image caching
+
+## 🚀 Features
+
+* **Upcoming Launch List**
+* **Launch Details**
+* **Live Activity (Upcoming)**
+* **Pagination (Upcoming)**
+
+## 🏁 Challenge
 
 Our team loves the space, but as our time is short, we are not always able to follow everything on the fly!
 
 So we need an app that can quickly provide us with information on what rocket flights are currently planned for the near future.
 
-## Details
+### Details ###
 Create project `Space-Challenge`.
 
 To get started use [The Space Devs API](https://thespacedevs.com/llapi) for launches. Note that API can be used only 15 times per hour.
