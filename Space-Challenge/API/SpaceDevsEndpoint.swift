@@ -9,7 +9,7 @@ import Moya
 import Foundation
 
 enum SpaceDevsEndpoint: TargetType {
-    case getUpcomingLaunches(id: String?)
+    case getUpcomingLaunches(pageNumber: Int)
     case getLaunchDetails(id: String)
     
     var baseURL: URL {
@@ -18,8 +18,8 @@ enum SpaceDevsEndpoint: TargetType {
     
     var path: String {
         switch self {
-        case .getUpcomingLaunches(let id):
-            return "launch/upcoming/\(id ?? "")"
+        case .getUpcomingLaunches:
+            return "launch/upcoming"
         case .getLaunchDetails(let id):
             return "launch/\(id)"
         }
@@ -43,7 +43,19 @@ enum SpaceDevsEndpoint: TargetType {
     }
     
     var task: Task {
-        .requestPlain
+        switch self {
+        case .getLaunchDetails:
+            return .requestPlain
+        case .getUpcomingLaunches(let pageNumber):
+            let itemsPerPage = 10
+            return .requestParameters(
+                parameters: [
+                    "limit" : itemsPerPage,
+                    "offset" : pageNumber * itemsPerPage
+                ],
+                encoding: URLEncoding.queryString
+            )
+        }
     }
     
     var sampleData: Data {

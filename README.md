@@ -25,8 +25,8 @@ Created specifically for a [Challenge](#-challenge), this app comes with a host 
 
 * **Upcoming Launch List**
 * **Launch Details**
+* **Pagination**
 * **Live Activity (Upcoming)**
-* **Pagination (Upcoming)**
 
 ## 🏁 Challenge
 

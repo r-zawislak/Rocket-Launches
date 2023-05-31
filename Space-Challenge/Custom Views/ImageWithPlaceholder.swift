@@ -10,17 +10,19 @@ import Kingfisher
 
 struct ImageWithPlaceholder: View {
     let url: URL
-    let width: CGFloat?
-    let height: CGFloat?
+    let width: CGFloat
+    let height: CGFloat
     
-    init(url: URL, width: CGFloat? = nil, height: CGFloat? = nil) {
+    init(url: URL, width: CGFloat, height: CGFloat) {
         self.url = url
         self.width = width
         self.height = height
     }
 
     var body: some View {
+        let scale = UIScreen.main.scale
         KFImage(url)
+            .downsampling(size: .init(width: width * scale, height: height * scale))
             .resizable()
             .placeholder { progress in
                 placeholder

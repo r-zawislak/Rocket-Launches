@@ -18,7 +18,7 @@ struct LaunchListView: View {
         NavigationView {
             content
                 .task {
-                    viewModel.fetchLaunches()
+                    viewModel.fetchMoreLaunches()
                 }
                 .navigationTitle(showDetails ? "Details" : "Launches")
                 .toolbar(content: {
@@ -36,14 +36,17 @@ struct LaunchListView: View {
     
     private var content: some View {
         ScrollView(.vertical) {
-            VStack(spacing: 16) {
+            LazyVStack(spacing: 16) {
                 if viewModel.launches.isEmpty {
                     redactedList
                 } else {
                     launchList
                     
-                    if viewModel.canLoadMore {
+                    if viewModel.canLoadMore && !viewModel.launches.isEmpty {
                         redactedRow
+                            .onAppear {
+                                viewModel.fetchMoreLaunches()
+                            }
                     }
                 }
             }
@@ -51,7 +54,6 @@ struct LaunchListView: View {
         }
         .padding()
     }
-    
     private var redactedList: some View {
         ForEach(0..<10, id: \.self) { _ in
             redactedRow

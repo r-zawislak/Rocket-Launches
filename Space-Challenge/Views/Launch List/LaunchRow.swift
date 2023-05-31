@@ -67,7 +67,7 @@ struct LaunchRow: View {
                 .fixedSize(horizontal: false, vertical: true)
                     
             
-            infoRow(title: "Mission", value: viewModel.launch.mission.name)
+            infoRow(title: "Mission", value: viewModel.launch.mission?.name)
             infoRow(title: "Rocket", value: viewModel.launch.rocket.configuration.fullName)
             infoRow(title: "Service Provider", value: viewModel.launch.launchServiceProvider.name)
             infoRow(title: "Launch", value: viewModel.launchTime)
@@ -76,13 +76,13 @@ struct LaunchRow: View {
         .padding(.horizontal, 4)
     }
     
-    private func infoRow(title: String, value: String) -> some View {
+    private func infoRow(title: String, value: String?) -> some View {
         VStack(alignment: .leading) {
             Text(title)
                 .foregroundColor(.blue)
                 .font(.caption)
                 .bold()
-            Text(value)
+            Text(value ?? "-")
                 .padding(.leading, 16)
                 .font(.caption2)
                 .lineLimit(nil)
